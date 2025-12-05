@@ -47,3 +47,40 @@ protected:
 private:
   double invxsquared(double x); //The default functional form
 };
+//Normal distribution
+class NormalDistribution : public FiniteFunction {
+  public:
+    NormalDistribution(double mu, double sigma);
+    virtual double callFunction(double x) override;
+    double mu() const {return m_mu;}
+    double sigma() const {return m_sigma;}
+  private:
+  double m_mu; //Mean
+  double m_sigma; //std
+};
+//CauchyLorentz districution
+class CauchyLorentzDistribution : public FiniteFunction {
+public:
+    CauchyLorentzDistribution(double x0, double gamma);
+    virtual double callFunction(double x) override;
+    double x0() const { return m_x0; }
+    double gamma() const { return m_gamma; }
+private:
+    double m_x0;   // Location 
+    double m_gamma; // Scale 
+};
+//crystal ball 
+class CrystalBallDistribution : public FiniteFunction {
+public:
+    CrystalBallDistribution(double alpha, double n, double x_bar, double sigma);
+    virtual double callFunction(double x) override;
+    double x_bar() const { return m_x_bar; }
+    double sigma() const { return m_sigma; }
+    double alpha() const { return m_alpha; }
+    double n() const { return m_n; }
+private:
+    double m_alpha;
+    double m_n;
+    double m_x_bar;
+    double m_sigma;
+};

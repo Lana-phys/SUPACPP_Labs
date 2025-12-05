@@ -62,8 +62,14 @@ Integration by hand (output needed to normalise function when plotting)
 ###################
 */ 
 double FiniteFunction::integrate(int Ndiv){ //private
-  //ToDo write an integrator
-  return -99;  
+  double steps = (m_RMax - m_RMin) / Ndiv;
+  double sum = 0.0;
+  double x =m_RMin;
+  for (int i = 0; i < Ndiv;i++){
+    sum += 0.5 * (callFunction(x)+callFunction(x+steps)) *steps;
+    x+= steps;
+  }
+  return sum;  
 }
 double FiniteFunction::integral(int Ndiv) { //public
   if (Ndiv <= 0){
@@ -77,7 +83,22 @@ double FiniteFunction::integral(int Ndiv) { //public
   }
   else return m_Integral; //Don't bother re-calculating integral if Ndiv is the same as the last call
 }
-
+//Normalisation
+NormalDistribution::NormalDistribution(double mu, double sigma)
+  :FiniteFunction(),m_mu(mu), m_sigma(sigma){}
+double NormalDistribution::callFunction(double x){
+  double coeff = 1/(m_sigma *sqrt(2*M_PI));
+  double exponent = -0.5 * pow((x-m_mu)/m_sigma,2);
+  return coeff *exp(exponent);
+}
+// Cauchy-Lorentz distribution
+CauchyLorentzDistribution::CauchyLorentzDistribution(double x0, double gamma)
+  :FiniteFunction(), m_x0(x0), m_gamma(gamma){};
+double CauchyLorentzDistribution::callFunction(double x){
+  return 1/(M_PI *m_gamma *(1+pow((x-m_x0)/m_gamma,2)));
+}  
+// Crystal ball
+//CrystalBallDistribution::CrystalBallDistribution ()
 /*
 ###################
 //Helper functions 
