@@ -35,7 +35,7 @@ int main() {
     CLD.plotData(Mystery, 100, true);
     CLD.printInfo();
     //Crystal Ball 
-    CrystalBallDistribution CBD(2, 1,1,3,"crystal ball");
+    CrystalBallDistribution CBD(2, 1,1,3,"CrystalBallDistribution");
     CBD.plotFunction();
     CBD.plotData(Mystery, 100, true);
     CBD.printInfo();
