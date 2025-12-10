@@ -25,9 +25,19 @@ int main() {
     //function.plotFunction();
     //function.plotData(Mystery,100,true);
     //Normal Distribution
-    NormalDistribution NormalDistribution(-1, 2);
-    NormalDistribution.plotFunction();
-    NormalDistribution.plotData(Mystery, 100, true);
-    //
+    NormalDistribution ND(2, 1,"NormalDistribution");
+    ND.plotFunction();
+    ND.plotData(Mystery, 100, true);
+    ND.printInfo();
+    //Cauchy lorentz distribution
+    CauchyLorentzDistribution CLD(2, 1.2, "CauchyLorentzDistribution");
+    CLD.plotFunction();
+    CLD.plotData(Mystery, 100, true);
+    CLD.printInfo();
+    //Crystal Ball 
+    CrystalBallDistribution CBD(2, 1,1,3,"crystal ball");
+    CBD.plotFunction();
+    CBD.plotData(Mystery, 100, true);
+    CBD.printInfo();
     return 0;
 }

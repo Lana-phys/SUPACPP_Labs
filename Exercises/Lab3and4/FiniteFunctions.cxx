@@ -84,21 +84,42 @@ double FiniteFunction::integral(int Ndiv) { //public
   else return m_Integral; //Don't bother re-calculating integral if Ndiv is the same as the last call
 }
 //Normalisation
-NormalDistribution::NormalDistribution(double mu, double sigma)
-  :FiniteFunction(),m_mu(mu), m_sigma(sigma){}
+NormalDistribution::NormalDistribution(double mu, double sigma,const std::string& name)
+  :FiniteFunction(),m_mu(mu), m_sigma(sigma){this->checkPath(name);}
 double NormalDistribution::callFunction(double x){
   double coeff = 1/(m_sigma *sqrt(2*M_PI));
   double exponent = -0.5 * pow((x-m_mu)/m_sigma,2);
   return coeff *exp(exponent);
 }
+void NormalDistribution::printInfo() {
+  std::cout << "NormalDistribution: mu=" << m_mu << " sigma=" << m_sigma << std::endl;
+  FiniteFunction::printInfo();
+}
 // Cauchy-Lorentz distribution
-CauchyLorentzDistribution::CauchyLorentzDistribution(double x0, double gamma)
-  :FiniteFunction(), m_x0(x0), m_gamma(gamma){};
+CauchyLorentzDistribution::CauchyLorentzDistribution(double x0, double gamma, const std::string& name)
+  :FiniteFunction(), m_x0(x0), m_gamma(gamma){this->checkPath(name);};
 double CauchyLorentzDistribution::callFunction(double x){
   return 1/(M_PI *m_gamma *(1+pow((x-m_x0)/m_gamma,2)));
-}  
+}
+void CauchyLorentzDistribution::printInfo() {
+  std::cout << "CauchyLorentzDistribution: x0=" << m_x0 << " gamma=" << m_gamma << std::endl;
+  FiniteFunction::printInfo();
+}
 // Crystal ball
-//CrystalBallDistribution::CrystalBallDistribution ()
+CrystalBallDistribution::CrystalBallDistribution (double x_bar, double sigma, double alpha, double n, const std::string& name)
+  : FiniteFunction(), m_x_bar(x_bar), m_sigma(sigma), m_alpha(alpha), m_n(n){this->checkPath(name);}
+double CrystalBallDistribution::callFunction(double x) {
+  double t = (x - m_x_bar) / m_sigma;
+  double absAlpha = std::abs(m_alpha);
+  double A = std::pow(m_n / absAlpha, m_n) * std::exp(-0.5 * absAlpha * absAlpha);
+  double B = m_n / absAlpha - absAlpha;
+    if (t > -absAlpha) {return std::exp(-0.5 * t * t);} 
+    else {return A * std::pow(B - t, -m_n);}
+}
+void CrystalBallDistribution::printInfo() {
+  std::cout << "CrystalBallDistribution: xbar=" << m_x_bar << "sigma" << m_sigma <<" alpha=" << m_alpha <<"n" << m_n << std::endl;
+  FiniteFunction::printInfo();
+}
 /*
 ###################
 //Helper functions 

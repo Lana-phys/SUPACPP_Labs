@@ -50,8 +50,9 @@ private:
 //Normal distribution
 class NormalDistribution : public FiniteFunction {
   public:
-    NormalDistribution(double mu, double sigma);
+    NormalDistribution(double mu, double sigma, const std::string& name);
     virtual double callFunction(double x) override;
+    virtual void printInfo() override;
     double mu() const {return m_mu;}
     double sigma() const {return m_sigma;}
   private:
@@ -61,8 +62,9 @@ class NormalDistribution : public FiniteFunction {
 //CauchyLorentz districution
 class CauchyLorentzDistribution : public FiniteFunction {
 public:
-    CauchyLorentzDistribution(double x0, double gamma);
+    CauchyLorentzDistribution(double x0, double gamma, const std::string& name);
     virtual double callFunction(double x) override;
+    virtual void printInfo() override;
     double x0() const { return m_x0; }
     double gamma() const { return m_gamma; }
 private:
@@ -72,8 +74,9 @@ private:
 //crystal ball 
 class CrystalBallDistribution : public FiniteFunction {
 public:
-    CrystalBallDistribution(double alpha, double n, double x_bar, double sigma);
+    CrystalBallDistribution(double alpha, double n, double x_bar, double sigma, const std::string& name);
     virtual double callFunction(double x) override;
+    virtual void printInfo() override;
     double x_bar() const { return m_x_bar; }
     double sigma() const { return m_sigma; }
     double alpha() const { return m_alpha; }
