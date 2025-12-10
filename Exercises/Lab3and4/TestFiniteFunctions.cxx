@@ -39,5 +39,8 @@ int main() {
     CBD.plotFunction();
     CBD.plotData(Mystery, 100, true);
     CBD.printInfo();
-    return 0;
+    //Metropolis algorithm 
+    // New crystal ball
+    auto samples = CBD.Metropolis(-5,10, 0.5);
+    CBD.plotData(samples, 100, false);
 }
