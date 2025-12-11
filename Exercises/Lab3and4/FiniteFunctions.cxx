@@ -84,29 +84,7 @@ double FiniteFunction::integral(int Ndiv) { //public
   }
   else return m_Integral; //Don't bother re-calculating integral if Ndiv is the same as the last call
 }
-//metropolis 
-std::vector<double> FiniteFunction::Metropolis(double x0,int iterations,double proposalSigma){
-    std::mt19937 eng(std::random_device{}());
-    std::uniform_real_distribution<> distUniform(-5, 1);//range
-    std::vector<double> accepted;
-    double x_i = x0;
-    
-    for (int i = 0; i < iterations; i++)
-    {
-        double y = generateRandom(x_i, proposalSigma);
-        double f_xi = callFunction(x_i);
-        double f_y  = callFunction(y);
-        double A = std::min(f_y / f_xi, 1.0);
-        double T = distUniform(eng);
-        if (T < A)
-        {
-            x_i = y;              // accept
-            accepted.push_back(y);
-        }
-    }
 
-    return accepted;
-}
 //Normalisation
 NormalDistribution::NormalDistribution(double mu, double sigma,const std::string& name)
   :FiniteFunction(),m_mu(mu), m_sigma(sigma){this->checkPath(name);}
@@ -119,6 +97,11 @@ void NormalDistribution::printInfo() {
   std::cout << "NormalDistribution: mu=" << m_mu << " sigma=" << m_sigma << std::endl;
   FiniteFunction::printInfo();
 }
+double NormalDistribution::generateRandom(double mean, double stdDev) {
+    std::random_device rd;
+    std::mt19937 eng(rd());
+    std::normal_distribution<> distr(mean, stdDev);
+    return distr(eng);}
 // Cauchy-Lorentz distribution
 CauchyLorentzDistribution::CauchyLorentzDistribution(double x0, double gamma, const std::string& name)
   :FiniteFunction(), m_x0(x0), m_gamma(gamma){this->checkPath(name);};

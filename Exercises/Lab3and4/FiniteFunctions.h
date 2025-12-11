@@ -20,13 +20,6 @@ public:
   void setOutfile(std::string outfile);
   void plotFunction(); //Plot the function using scanFunction
 
-  //metropolis
-  std::vector<double> Metropolis(double x0, int iterations, double proposalSigma);
-  virtual double generateRandom(double mean, double sigma)
-  {std::mt19937 eng(std::random_device{}());
-  std::normal_distribution<> dist(mean, sigma);
-  return dist(eng);
-  }
 
   //Plot the supplied data points (either provided data or points sampled from function) as a histogram using NBins
   void plotData(std::vector<double> &points, int NBins, bool isdata=true); //NB! use isdata flag to pick between data and sampled distributions
@@ -61,6 +54,7 @@ class NormalDistribution : public FiniteFunction {
   public:
     NormalDistribution(double mu, double sigma, const std::string& name);
     virtual double callFunction(double x) override;
+    double generateRandom(double mean, double stdDev);
     virtual void printInfo() override;
     double mu() const {return m_mu;}
     double sigma() const {return m_sigma;}
